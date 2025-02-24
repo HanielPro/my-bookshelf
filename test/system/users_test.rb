@@ -21,7 +21,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in "Role", with: @user.role
     click_on "Create User"
 
-    assert_text "User was successfully created"
+    assert_text "User foi criado com sucesso"
     click_on "Back"
   end
 

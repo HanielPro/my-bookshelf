@@ -18,7 +18,7 @@ class AuthorsTest < ApplicationSystemTestCase
     fill_in "Name", with: @author.name
     click_on "Create Author"
 
-    assert_text "Author was successfully created"
+    assert_text "Author foi criado com sucesso"
     click_on "Back"
   end
 

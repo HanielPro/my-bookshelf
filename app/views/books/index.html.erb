@@ -1,16 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Books" %>
-
-<h1>Books</h1>
-
-<div id="books">
+<h1>Livros Disponíveis</h1>
+<%= link_to "Novo Livro", new_book_path, class: "btn btn-primary" %>
+<ul>
   <% @books.each do |book| %>
-    <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
+    <li>
+      <%= link_to book.title, book_path(book) %> - 
+      Autores: <%= book.authors.map(&:name).join(", ") %>
+      <br>
+      Gêneros: <%= book.genres.map(&:name).join(", ") %>
+      <br>
+      <%= link_to "Editar", edit_book_path(book) %> |
+      <%= link_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza?" } %>
+    </li>
   <% end %>
-</div>
-
-<%= link_to "New book", new_book_path %>
+</ul>

@@ -18,7 +18,7 @@ class GenresTest < ApplicationSystemTestCase
     fill_in "Name", with: @genre.name
     click_on "Create Genre"
 
-    assert_text "Genre was successfully created"
+    assert_text "Genre foi criado com sucesso"
     click_on "Back"
   end
 

@@ -3,13 +3,13 @@
 one:
   title: MyString
   publisher: MyString
-  publication_year: 1
+  year_published: 1
   shelf: MyString
   quanty: 1
 
 two:
   title: MyString
   publisher: MyString
-  publication_year: 1
+  year_published: 1
   shelf: MyString
   quanty: 1

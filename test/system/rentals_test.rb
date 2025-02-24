@@ -19,7 +19,7 @@ class RentalsTest < ApplicationSystemTestCase
     fill_in "Return estimate date", with: @rental.return_estimate_date
     click_on "Create Rental"
 
-    assert_text "Rental was successfully created"
+    assert_text "Rental foi criado com sucesso"
     click_on "Back"
   end
 

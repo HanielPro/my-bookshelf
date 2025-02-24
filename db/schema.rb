@@ -21,7 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_134519) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "publisher"
-    t.integer "publication_year", default: 2000
+    t.integer "year_published", default: 2000
     t.string "shelf"
     t.integer "quanty", default: 0
     t.datetime "created_at", null: false

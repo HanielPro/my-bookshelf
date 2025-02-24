@@ -25,9 +25,11 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: "Book was successfully created." }
+        format.html { redirect_to @book, notice: "Livro adicionado com sucesso! foi criado com sucesso." }
         format.json { render :show, status: :created, location: @book }
       else
+        load_authors
+        load_genres
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
@@ -38,9 +40,11 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: "Book was successfully updated." }
+        format.html { redirect_to @book, notice: "o Livro foi atualizado com sucesso!" }
         format.json { render :show, status: :ok, location: @book }
       else
+        load_authors
+        load_genres
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
@@ -50,9 +54,11 @@ class BooksController < ApplicationController
   # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy!
+    # redirect books_path, notice: "Livro removido com sucesso!"
+
 
     respond_to do |format|
-      format.html { redirect_to books_path, status: :see_other, notice: "Book was successfully destroyed." }
+      format.html { redirect_to books_path, status: :see_other, notice: "Livro foi removido com sucesso!" }
       format.json { head :no_content }
     end
   end
@@ -65,6 +71,14 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.expect(book: [ :title, :publisher, :publication_year, :shelf, :quanty ])
+      params.expect(book: [ :title, :publisher, :year_published, :shelf, :quanty, authors_id: [] ])
+    end
+
+    def load_authors
+      @available_authors = Author.all
+    end
+
+    def load_genres
+      @available_genres = Genre.all
     end
 end

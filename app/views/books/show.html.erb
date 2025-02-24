@@ -1,10 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @book %>
+<h1><%= @book.title %></h1>
+<p><strong>Editora:</strong> <%= @book.publisher %></p>
+<p><strong>Prateleira:</strong> <%= @book.shelf %></p>
+<p><strong>Ano de Publicação:</strong> <%= @book.year_published %></p>
+<p><strong>Autores:</strong> <%= @book.authors.map(&:name).join(", ") %></p>
+
 
 <div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
-
-  <%= button_to "Destroy this book", @book, method: :delete %>
+    <%= link_to "Voltar", books_path %>
+    <%= link_to "Editar", edit_book_path(@book) %> |
+    <%= button_to "Apagar", @book, method: :delete %>
 </div>
