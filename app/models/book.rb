@@ -6,5 +6,5 @@ class Book < ApplicationRecord
   has_many :rentals
   has_many :users, through: :rentals
 
-  validates :title, :publisher, :quanty, year_published, presence: true
+  validates :title, :publisher, :quanty, :year_published, presence: true
 end
