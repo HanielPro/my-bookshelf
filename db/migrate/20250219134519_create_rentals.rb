@@ -7,10 +7,8 @@ class CreateRentals < ActiveRecord::Migration[8.0]
 
       t.references :book, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
-
-      add_check_constraint :rentals, "rental_date <= return_estimate_date", name: "rental_date_must_be_before_return_estimate_date"
-
       t.timestamps
     end
+    add_check_constraint :rentals, "rental_date <= return_estimate_date", name: "rental_date_must_be_before_return_estimate_date"
   end
 end

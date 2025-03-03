@@ -19,11 +19,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_134519) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "publisher"
-    t.integer "year_published", default: 2000
+    t.integer "year_published", default: 2000, null: false
     t.string "shelf"
-    t.integer "quanty", default: 0
+    t.integer "quanty", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -63,11 +63,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_134519) do
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_rentals_on_book_id"
     t.index ["user_id"], name: "index_rentals_on_user_id"
+    t.check_constraint "rental_date <= return_estimate_date", name: "rental_date_must_be_before_return_estimate_date"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.boolean "habilitaded"
+    t.boolean "habilitaded", default: true
     t.string "role"
     t.string "email"
     t.string "password"
