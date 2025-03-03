@@ -6,7 +6,6 @@ class CreateBooks < ActiveRecord::Migration[8.0]
       t.integer :year_published, default: 2000, null: false
       t.string :shelf
       t.integer :quanty, default: 0, null: false
-      validates :title, :publisher, :quanty, year_published, presence: true
       t.timestamps
     end
   end
