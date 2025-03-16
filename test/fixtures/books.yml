@@ -5,11 +5,11 @@ one:
   publisher: MyString
   year_published: 1
   shelf: MyString
-  quantity: 1
+  quanty: 1
 
 two:
   title: MyString
   publisher: MyString
   year_published: 1
   shelf: MyString
-  quantity: 1
+  quanty: 1

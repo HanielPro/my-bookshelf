@@ -25,7 +25,7 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
-        format.html { redirect_to @rental, notice: "Loan inserted successfully" }
+        format.html { redirect_to @rental, notice: "Empréstimo salvo com sucesso" }
         format.json { render :show, status: :created, location: @rental }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class RentalsController < ApplicationController
   def update
     respond_to do |format|
       if @rental.update(rental_params)
-        format.html { redirect_to @rental, notice: "Loan updated successfully" }
+        format.html { redirect_to @rental, notice: "Empréstimo atualizado com sucesso" }
         format.json { render :show, status: :ok, location: @rental }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class RentalsController < ApplicationController
     @rental.destroy!
 
     respond_to do |format|
-      format.html { redirect_to rentals_path, status: :see_other, notice: "Loan releted successfully" }
+      format.html { redirect_to rentals_path, status: :see_other, notice: "Empréstimo excluído com sucesso" }
       format.json { head :no_content }
     end
   end

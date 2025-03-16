@@ -14,7 +14,7 @@ class AuthorsTest < ApplicationSystemTestCase
     visit authors_url
     click_on "New author"
 
-    fill_in "date_of_birth", with: @author.date_of_birth
+    fill_in "birthdate", with: @author.birthdate
     fill_in "Name", with: @author.name
     click_on "Create Author"
 
@@ -26,7 +26,7 @@ class AuthorsTest < ApplicationSystemTestCase
     visit author_url(@author)
     click_on "Edit this author", match: :first
 
-    fill_in "date_of_birth", with: @author.date_of_birth
+    fill_in "birthdate", with: @author.birthdate
     fill_in "Name", with: @author.name
     click_on "Update Author"
 

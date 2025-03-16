@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Empréstimos</h1>
+<%= link_to "Cadastrar Empréstimo", new_rental_path, class: "btn btn-primary" %>
+<ul>
+  <% @rentals.each do |rental| %>
+    <li>
+      <%= link_to rental.name, rental_path(rental) %>
+      
+      <br>
+      <%= link_to "Editar", edit_rental_path(rental) %> |
+      <%= link_to "Excluir", rental_path(rental), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %>
+    </li>
+  <% end %>
+</ul>

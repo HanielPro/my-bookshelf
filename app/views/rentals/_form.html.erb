@@ -1,7 +1,7 @@
 <%= form_with(model: rental) do |form| %>
   <% if rental.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(rental.errors.count, "error") %> prohibited this rental from being saved:</h2>
+      <h2><%= pluralize(rental.errors.count, "error") %> impediram o salvamento deste empréstimo:</h2>
 
       <ul>
         <% rental.errors.each do |error| %>
@@ -12,21 +12,21 @@
   <% end %>
 
   <div>
-    <%= form.label :rental_date, style: "display: block" %>
+    <%= form.label :Data_de_empréstimo, style: "display: block" %>
     <%= form.date_field :rental_date %>
   </div>
 
   <div>
-    <%= form.label :scheduled_return_date, style: "display: block" %>
+    <%= form.label :Data_de_devolução_prevista, style: "display: block" %>
     <%= form.date_field :return_estimate_date %>
   </div>
   
   <div>
-    <%= form.label :actual_return_date, style: "display: block" %>
+    <%= form.label :Data_de_devolução_efetiva, style: "display: block" %>
     <%= form.date_field :return_date %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Salvar Empréstimo"%>
   </div>
 <% end %>

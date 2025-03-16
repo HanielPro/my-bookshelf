@@ -3,8 +3,8 @@
 <%= render @rental %>
 
 <div>
-  <%= link_to "Edit this rental", edit_rental_path(@rental) %> |
-  <%= link_to "Back to rentals", rentals_path %>
+  <%= link_to "Editar este Empréstimo", edit_rental_path(@rental) %> |
+  <%= link_to "Voltar para a lista", rentals_path %>
 
-  <%= button_to "Destroy this rental", @rental, method: :delete %>
+  <%= button_to "Excluir este Empréstimo", @rental, method: :delete %>
 </div>
