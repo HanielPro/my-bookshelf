@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  birthdate: 2025-02-19
+  date_of_birth: 2025-02-19
 
 two:
   name: MyString
-  birthdate: 2025-02-19
+  date_of_birth: 2025-02-19

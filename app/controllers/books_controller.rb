@@ -25,7 +25,7 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: "Livro adicionado com sucesso! foi criado com sucesso." }
+        format.html { redirect_to @book, notice: "Book inserted successfully" }
         format.json { render :show, status: :created, location: @book }
       else
         load_authors
@@ -40,7 +40,7 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: "o Livro foi atualizado com sucesso!" }
+        format.html { redirect_to @book, notice: "Book updated successfully" }
         format.json { render :show, status: :ok, location: @book }
       else
         load_authors
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
 
 
     respond_to do |format|
-      format.html { redirect_to books_path, status: :see_other, notice: "Livro foi removido com sucesso!" }
+      format.html { redirect_to books_path, status: :see_other, notice: "Book deleted successfully" }
       format.json { head :no_content }
     end
   end
@@ -71,7 +71,7 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.expect(book: [ :title, :publisher, :year_published, :shelf, :quanty, authors_id: [] ])
+      params.expect(book: [ :title, :publisher, :year_published, :shelf, :quantity, authors_id: [] ])
     end
 
     def load_authors

@@ -22,22 +22,22 @@
 </div>
 
 <div>
-    <%= form.label :year_published, style: "display: block" %>
+    <%= form.label :publication_year, style: "display: block" %>
     <%= form.number_field :year_published %>
 </div>
 
 <div>
-    <%= form.label :shelf, style: "display: block" %>
+    <%= form.label :shelf_number, style: "display: block" %>
     <%= form.text_field :shelf %>
 </div>
 
 <div>
-    <%= form.label :quanty, style: "display: block" %>
-    <%= form.number_field :quanty %>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity %>
 </div>
 
 <div id="genres-fields">
-    <%= form.label :genre_ids, "Gêneros" %><br>
+    <%= form.label :genre_ids, "Genres" %><br>
     <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) %>
 </div>
 

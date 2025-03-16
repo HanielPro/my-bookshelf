@@ -16,7 +16,7 @@ class BooksTest < ApplicationSystemTestCase
 
     fill_in "Ano de Publicação", with: @book.year_published
     fill_in "Editora", with: @book.publisher
-    fill_in "Quantidade", with: @book.quanty
+    fill_in "Quantidade", with: @book.quantity
     fill_in "Prateleira", with: @book.shelf
     fill_in "Título", with: @book.title
     click_on "Create Book"
@@ -31,7 +31,7 @@ class BooksTest < ApplicationSystemTestCase
 
     fill_in "Ano de Publicação", with: @book.year_published
     fill_in "Editora", with: @book.publisher
-    fill_in "Quantidade", with: @book.quanty
+    fill_in "Quantidade", with: @book.quantity
     fill_in "Prateleira", with: @book.shelf
     fill_in "Título", with: @book.title
     click_on "Update Book"

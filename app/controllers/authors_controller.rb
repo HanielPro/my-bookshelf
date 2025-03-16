@@ -25,7 +25,7 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       if @author.save
-        format.html { redirect_to @author, notice: "Author foi criado com sucesso." }
+        format.html { redirect_to @author, notice: "Author inserted successfully" }
         format.json { render :show, status: :created, location: @author }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AuthorsController < ApplicationController
   def update
     respond_to do |format|
       if @author.update(author_params)
-        format.html { redirect_to @author, notice: "Author foi atualizado com sucesso!" }
+        format.html { redirect_to @author, notice: "Author updated successfully" }
         format.json { render :show, status: :ok, location: @author }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class AuthorsController < ApplicationController
     @author.destroy!
 
     respond_to do |format|
-      format.html { redirect_to authors_path, status: :see_other, notice: "Author foi removido com sucesso!" }
+      format.html { redirect_to authors_path, status: :see_other, notice: "Author deleted successfully" }
       format.json { head :no_content }
     end
   end
@@ -65,6 +65,6 @@ class AuthorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def author_params
-      params.expect(author: [ :name, :birthdate ])
+      params.expect(author: [ :name, :date_of_birth ])
     end
 end
