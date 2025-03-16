@@ -1,16 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Genres" %>
-
 <h1>Genres</h1>
-
-<div id="genres">
+<%= link_to "New Genre", new_genre_path, class: "btn btn-primary" %>
+<ul>
   <% @genres.each do |genre| %>
-    <%= render genre %>
-    <p>
-      <%= link_to "Show this genre", genre %>
-    </p>
+    <li>
+      <%= link_to genre.name, genre_path(genre) %>
+      Authors: <%= book.authors.map(&:name).join(", ") %>
+      <br>
+      Genres: <%= book.genres.map(&:name).join(", ") %>
+      <br>
+      <%= link_to "Edit", edit_genre_path(genre) %> |
+      <%= link_to "Delete", genre_path(genre), method: :delete, data: { confirm: "Are you sure you want to delete this genre?" } %>
+    </li>
   <% end %>
-</div>
-
-<%= link_to "New genre", new_genre_path %>
+</ul>

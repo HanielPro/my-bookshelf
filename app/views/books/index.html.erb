@@ -1,17 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Livros Disponíveis</h1>
-<%= link_to "Novo Livro", new_book_path, class: "btn btn-primary" %>
+<h1>Books</h1>
+<%= link_to "New Book", new_book_path, class: "btn btn-primary" %>
 <ul>
   <% @books.each do |book| %>
     <li>
       <%= link_to book.title, book_path(book) %> - 
-      Autores: <%= book.authors.map(&:name).join(", ") %>
+      Authors: <%= book.authors.map(&:name).join(", ") %>
       <br>
-      Gêneros: <%= book.genres.map(&:name).join(", ") %>
+      Genres: <%= book.genres.map(&:name).join(", ") %>
       <br>
-      <%= link_to "Editar", edit_book_path(book) %> |
-      <%= link_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza?" } %>
+      <%= link_to "Edit", edit_book_path(book) %> |
+      <%= link_to "Delete", book_path(book), method: :delete, data: { confirm: "Are you sure you want to delete this book?" } %>
     </li>
   <% end %>
 </ul>

@@ -3,14 +3,17 @@
 <% content_for :title, "Authors" %>
 
 <h1>Authors</h1>
-
-<div id="authors">
+<%= link_to "New Author", new_author_path, class: "btn btn-primary" %>
+<ul>
   <% @authors.each do |author| %>
-    <%= render author %>
-    <p>
-      <%= link_to "Show this author", author %>
-    </p>
+    <li>
+      <%= link_to author.name, author_path(author) %>
+      Books: <%= author.books.map(&:title).join(", ") %>
+      <br>
+      Gêneros: <%= book.genres.map(&:name).join(", ") %>
+      <br>
+      <%= link_to "Edit", edit_author_path(author) %> |
+      <%= link_to "Delete", author_path(author), method: :delete, data: { confirm: "Are you sure you want to delete this author?" } %>
+    </li>
   <% end %>
-</div>
-
-<%= link_to "New author", new_author_path %>
+</ul>
