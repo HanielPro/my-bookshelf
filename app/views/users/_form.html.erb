@@ -1,42 +1,42 @@
 <%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<% if user.errors.any? %>
+<div style="color: red">
+    <h2><%= pluralize(user.errors.count, "error") %> P:</h2>
 
-      <ul>
+    <ul>
         <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <li><%= error.full_message %></li>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+    </ul>
+</div>
+<% end %>
 
-  <div>
+<div>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :habilitaded, style: "display: block" %>
     <%= form.checkbox :habilitaded %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :role, style: "display: block" %>
     <%= form.text_field :role %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :email, style: "display: block" %>
     <%= form.text_field :email %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.label :password, style: "display: block" %>
     <%= form.text_field :password %>
-  </div>
+</div>
 
-  <div>
+<div>
     <%= form.submit %>
-  </div>
+</div>
 <% end %>

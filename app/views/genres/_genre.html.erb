@@ -1,12 +1,14 @@
 <div id="<%= dom_id genre %>">
-  <p>
-    <strong>Name:</strong>
-    <%= genre.name %>
-  </p>
+    <p>
+        <strong>Gênero:</strong>
+        <%= genre.name %>
+    </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= genre.description %>
-  </p>
+    <% if genre.description.present? %>
+    <p>
+        <strong>Descrição:</strong>
+        <%= genre.description %>
+    </p>
+    <% end %>
 
 </div>
