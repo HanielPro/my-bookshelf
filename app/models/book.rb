@@ -16,4 +16,8 @@ class Book < ApplicationRecord
   # Validations#+
   # Ensures that the title, publisher, quanty, and year_published attributes are present#+
   validates :title, :publisher, :quanty, :year_published, presence: true
+
+  def available?
+    quanty > 0
+  end
 end

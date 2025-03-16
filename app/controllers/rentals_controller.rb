@@ -13,6 +13,7 @@ class RentalsController < ApplicationController
   # GET /rentals/new
   def new
     @rental = Rental.new
+    @books = Book.where(available: true)  # Lista apenas livros disponíveis
   end
 
   # GET /rentals/1/edit
@@ -22,10 +23,11 @@ class RentalsController < ApplicationController
   # POST /rentals or /rentals.json
   def create
     @rental = Rental.new(rental_params)
+    @book = Book.find(@rental.book_id)
 
     respond_to do |format|
       if @rental.save
-        format.html { redirect_to @rental, notice: "Rental foi criado com sucesso." }
+        format.html { redirect_to @rental, notice: "Empréstimo foi criado com sucesso." }
         format.json { render :show, status: :created, location: @rental }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +67,10 @@ class RentalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rental_params
-      params.expect(rental: [ :rental_date, :return_date, :return_estimate_date ])
+      params.require(:rental).permit(:book_id, :user)
+      # Adiciona os campos manualmente
+      rental_date = Date.today
+      return_estimate_date = Date.today + 25.days
+      { rental_date: rental_date, return_estimate_date: return_estimate_date }
     end
 end

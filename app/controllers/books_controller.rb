@@ -40,6 +40,21 @@ class BooksController < ApplicationController
     redirect_to books_path, notice: "Livro removido com sucesso!", status: :see_other
   end
 
+  def search
+    book = Book.includes(:authors, :genres).where("title LIKE ?", "%#{params[:title]}%").first
+
+    if book
+      render json: {
+        id: book.id,
+        title: book.title,
+        authors: book.authors.map(&:name),
+        genres: book.genres.map(&:name),
+        quanty: book.quanty
+      }
+    else
+      render json: { error: "Livro não encontrado" }, status: :not_found
+    end
+  end
   private
 
   def set_book

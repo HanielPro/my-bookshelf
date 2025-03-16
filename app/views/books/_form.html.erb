@@ -1,67 +1,102 @@
-<%= form_with(model: book) do |form| %>
-<% if book.errors.any? %>
-<div style="color: red">
-    <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-    <ul>
-        <% book.errors.each do |error| %>
-        <li><%= error.full_message %></li>
+<%= form_with(model: rental) do |form| %>
+  <% if rental.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(rental.errors.count, "error") %> prohibited this rental from being saved:</h2>
+      <ul>
+        <% rental.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
-    </ul>
-</div>
-<% end %>
-
-<div>
-    <%= form.label :title, "Título", style: "display: block" %>
-    <%= form.text_field :title, class: "form-control" %>
-</div>
-
-<div>
-    <%= form.label :publisher, "Editora", style: "display: block" %>
-    <%= form.text_field :publisher, class: "form-control" %>
-</div>
-
-<div>
-    <%= form.label :year_published, "Ano de Publicaçao", style: "display: block" %>
-    <%= form.number_field :year_published, class: "form-control" %>
-</div>
-
-<div>
-    <%= form.label :shelf, "Prateleira", style: "display: block" %>
-    <%= form.text_field :shelf, class: "form-control" %>
-</div>
-
-<div>
-    <%= form.label :quanty, "Quantidade de Exemplares:", style: "display: block" %>
-    <%= form.number_field :quanty, class: "form-control" %>
-</div>
-
-<div id="genres-fields">
-
-    <%= form.label :genre_ids, "Gêneros" %><br>
-    <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) %>
-</div>
-
-<div>
-    <label>Autores</label>
-    <div id="authors-container">
-      <div class="author-select">
-        <%= form.collection_select :author_ids, Author.all, :id, :name, {}, { class: "form-control author-dropdown" } %>
-      </div>
+      </ul>
     </div>
-    <button type="button" id="add-author" class="btn btn-secondary">Adicionar Autor</button>
-</div>
+  <% end %>
 
-<div>
-    <%= form.submit class: "btn btn-primary" %>
-</div>
+  <%= hidden_field_tag :book_id, nil, id: "book_id" %>
+  <%= hidden_field_tag :user_id, nil, id: "user_id" %>
+
+  <div>
+    <%= form.label :book_name, "Nome do Livro" %>
+    <%= text_field_tag :book_name, nil, id: "book_name" %>
+    <%= button_tag "OK", type: "button", id: "search_book" %>
+  </div>
+
+  <div id="book_info" style="display: none; margin-top: 10px;">
+    <h3>Informações do Livro</h3>
+    <p><strong>Título:</strong> <span id="book_title"></span></p>
+    <p><strong>Autor(es):</strong> <span id="book_authors"></span></p>
+    <p><strong>Gênero(s):</strong> <span id="book_genres"></span></p>
+    <p><strong>Quantidade disponível:</strong> <span id="book_quanty"></span></p>
+  </div>
+
+  <p id="book_error" style="color: red; display: none;">Livro não encontrado.</p>
+
+  <hr>
+
+  <div>
+    <%= form.label :user_registration, "Matrícula do Usuário" %>
+    <%= text_field_tag :user_registration, nil, id: "user_registration" %>
+    <%= button_tag "OK", type: "button", id: "search_user" %>
+  </div>
+
+  <div id="user_info" style="display: none; margin-top: 10px;">
+    <h3>Informações do Usuário</h3>
+    <p><strong>Nome:</strong> <span id="user_name"></span></p>
+    <p><strong>Email:</strong> <span id="user_email"></span></p>
+    <p><strong>Habilitado:</strong>
+      <span id="user_habilitaded"></span>
+    </p>
+  </div>
+
+  <p id="user_error" style="color: red; display: none;">Usuário não encontrado.</p>
+
+  <hr>
+
+  <div>
+    <%= form.submit "Confirmar Empréstimo", class: "btn btn-primary" %>
+    <%= link_to "Cancelar", rentals_path, class: "btn btn-secondary" %>
+  </div>
 <% end %>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("add-author").addEventListener("click", function() {
-      let container = document.getElementById("authors-container");
-      let newDropdown = document.querySelector(".author-select").cloneNode(true);
-      container.appendChild(newDropdown);
+    document.getElementById("search_book").addEventListener("click", function() {
+      const bookName = document.getElementById("book_name").value;
+
+      fetch(`/books/search?title=${bookName}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("book_error").style.display = "block";
+            document.getElementById("book_info").style.display = "none";
+          } else {
+            document.getElementById("book_error").style.display = "none";
+            document.getElementById("book_info").style.display = "block";
+            document.getElementById("book_title").textContent = data.title;
+            document.getElementById("book_authors").textContent = data.authors.join(", ");
+            document.getElementById("book_genres").textContent = data.genres.join(", ");
+            document.getElementById("book_quanty").textContent = data.quanty;
+            document.getElementById("book_id").value = data.id; // Preenche o ID do livro no campo oculto
+          }
+        });
+    });
+
+    document.getElementById("search_user").addEventListener("click", function() {
+      const userRegistration = document.getElementById("user_registration").value;
+
+      fetch(`/users/search?registration=${userRegistration}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("user_error").style.display = "block";
+            document.getElementById("user_info").style.display = "none";
+          } else {
+            document.getElementById("user_error").style.display = "none";
+            document.getElementById("user_info").style.display = "block";
+            document.getElementById("user_name").textContent = data.name;
+            document.getElementById("user_email").textContent = data.email;
+            document.getElementById("user_habilitaded").textContent = data.habilitaded ? "sim" : "não";
+            document.getElementById("user_id").value = data.id; // Preenche o ID do usuário no campo oculto
+          }
+        });
     });
   });
 </script>

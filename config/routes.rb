@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
   resources :rentals
-  resources :users
+  resources :books do
+    collection do
+      get "search"
+    end
+  end
+
+  resources :users do
+    collection do
+      get "search"
+    end
+  end
   resources :genres
-  resources :books
   resources :authors
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

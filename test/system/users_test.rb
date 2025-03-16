@@ -18,7 +18,7 @@ class UsersTest < ApplicationSystemTestCase
     check "Habilitaded" if @user.habilitaded
     fill_in "Name", with: @user.name
     fill_in "Password", with: @user.password
-    fill_in "Role", with: @user.role
+    fill_in "Registration", with: @user.registration
     click_on "Create User"
 
     assert_text "User foi criado com sucesso"
@@ -33,7 +33,7 @@ class UsersTest < ApplicationSystemTestCase
     check "Habilitaded" if @user.habilitaded
     fill_in "Name", with: @user.name
     fill_in "Password", with: @user.password
-    fill_in "Role", with: @user.role
+    fill_in "Registration", with: @user.registration
     click_on "Update User"
 
     assert_text "User was successfully updated"
