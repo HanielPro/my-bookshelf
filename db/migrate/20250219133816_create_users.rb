@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration[8.0]
     create_table :users do |t|
       t.string :name
       t.boolean :habilitaded, default: true
-      t.string :role
+      t.string :registration
       t.string :email
       t.string :password
       t.timestamps

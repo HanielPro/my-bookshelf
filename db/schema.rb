@@ -69,7 +69,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_134519) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.boolean "habilitaded", default: true
-    t.string "role"
+    t.string "registration"
     t.string "email"
     t.string "password"
     t.datetime "created_at", null: false

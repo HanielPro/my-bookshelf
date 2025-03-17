@@ -1,13 +1,27 @@
 Rails.application.routes.draw do
-  resources :rentals
-  resources :users
-  resources :genres
-  resources :books
-  resources :authors
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :rentals do
+    member do
+      patch "return_book"  # Endpoint para devolução do livro
+      patch "extend_return_estimate_date"  # Endpoint para prolongar o prazo de devolução
+    end
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  resources :books do
+    collection do
+      get "search"
+    end
+  end
+
+  resources :users do
+    collection do
+      get "search"
+    end
+  end
+
+  resources :genres
+  resources :authors
+
+  # Endpoint de health check
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

@@ -11,22 +11,136 @@
     </div>
   <% end %>
 
+  <%= hidden_field_tag :book_id, nil, id: "book_id" %>
+  <%= hidden_field_tag :user_id, nil, id: "user_id" %>
+
+  <!-- Campo para buscar livro -->
   <div>
-    <%= form.label :Data_de_empréstimo, style: "display: block" %>
-    <%= form.date_field :rental_date %>
+    <%= label_tag :book_name, "Nome do Livro" %>
+    <%= text_field_tag :book_name, nil, id: "book_name" %>
+    <%= button_tag "OK", type: "button", id: "search_book" %>
   </div>
 
+  <!-- Exibir informações do livro -->
+  <div id="book_info" style="display: none; margin-top: 10px;">
+    <h3>Informações do Livro</h3>
+    <p><strong>Título:</strong> <span id="book_title"></span></p>
+    <p><strong>Autor(es):</strong> <span id="book_authors"></span></p>
+    <p><strong>Gênero(s):</strong> <span id="book_genres"></span></p>
+    <p><strong>Quantidade disponível:</strong> <span id="book_quanty"></span></p>
+  </div>
+
+  <p id="book_error" style="color: red; display: none;">Livro não encontrado.</p>
+
+  <hr>
+
+  <!-- Campo para buscar usuário -->
   <div>
-    <%= form.label :Data_de_devolução_prevista, style: "display: block" %>
+    <%= label_tag :user_registration, "Matrícula do Usuário" %>
+    <%= text_field_tag :user_registration, nil, id: "user_registration" %>
+    <%= button_tag "OK", type: "button", id: "search_user" %>
+  </div>
+
+  <!-- Exibir informações do usuário -->
+  <div id="user_info" style="display: none; margin-top: 10px;">
+    <h3>Informações do Usuário</h3>
+    <p><strong>Nome:</strong> <span id="user_name"></span></p>
+    <p><strong>Email:</strong> <span id="user_email"></span></p>
+    <p><strong>Habilitado:</strong>
+        <span id="user_habilitaded">
+        </span>
+    </p>
+  </div>
+
+  <p id="user_error" style="color: red; display: none;">Usuário não encontrado.</p>
+
+  <hr>
+
+  <!-- Novo campo para a data de aluguel -->
+  <%= form.label :Data_de_empréstimo, style: "display: block" %>
+    <%= form.date_field :rental_date %>
+  
+  <%= form.label :Data_de_devolução_prevista, style: "display: block" %>
     <%= form.date_field :return_estimate_date %>
   </div>
   
   <div>
     <%= form.label :Data_de_devolução_efetiva, style: "display: block" %>
     <%= form.date_field :return_date %>
+
+  <!-- Novo campo para a data de devolução estimada -->
+  <div>
+    <%= label_tag :return_estimate_date, "Data Estimada de Devolução" %>
+    <%= text_field_tag :return_estimate_date, (Date.today + 25.days).to_s, id: "return_estimate_date", readonly: true %>
   </div>
 
+  <hr>
+
+  <!-- Botões de ação -->
   <div>
     <%= form.submit "Salvar Empréstimo"%>
+    <%= link_to "Cancelar", rentals_path, class: "btn btn-secondary" %>
   </div>
+
 <% end %>
+
+
+<!-- Script para buscar livro e usuário -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("search_book").addEventListener("click", function() {
+            const bookName = document.getElementById("book_name").value;
+
+            fetch(`/books/search?title=${bookName}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if (data.error) {
+                        document.getElementById("book_error").style.display = "block";
+                        document.getElementById("book_info").style.display = "none";
+                    } else {
+                        document.getElementById("book_error").style.display = "none";
+                        document.getElementById("book_info").style.display = "block";
+                        document.getElementById("book_title").textContent = data.title;
+                        document.getElementById("book_authors").textContent = data.authors.join(", ");
+                        document.getElementById("book_genres").textContent = data.genres.join(", ");
+                        document.getElementById("book_quanty").textContent = data.quanty;
+                        document.getElementById("book_id").value = data.id;
+                    }
+                });
+        });
+
+        document.getElementById("search_user").addEventListener("click", function() {
+            const userRegistration = document.getElementById("user_registration").value;
+
+            fetch(`/users/search?registration=${userRegistration}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if (data.error) {
+                        document.getElementById("user_error").style.display = "block";
+                        document.getElementById("user_info").style.display = "none";
+                    } else {
+                        document.getElementById("user_error").style.display = "none";
+                        document.getElementById("user_info").style.display = "block";
+                        document.getElementById("user_name").textContent = data.name;
+                        document.getElementById("user_email").textContent = data.email;
+                        document.getElementById("user_habilitaded").textContent = (data.habilitaded ? "sim" : "não");
+                        document.getElementById("user_id").value = data.id;
+                    }
+                });
+        });
+
+
+        document.getElementById("confirm_rental").addEventListener("click", function(event) {
+            const bookId = document.getElementById("book_id").value;
+            const userId = document.getElementById("user_id").value;
+
+            if (!bookId || !userId) {
+                alert("Por favor, selecione um livro e um usuário antes de confirmar o empréstimo.");
+                event.preventDefault(); // Impede o envio do formulário se os campos estiverem vazios
+            }
+        });
+
+    });
+</script>

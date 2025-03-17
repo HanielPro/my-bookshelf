@@ -1,25 +1,19 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :set_book, only: %i[show edit update destroy]
+  before_action :load_authors, only: %i[new edit create update]
+  before_action :load_genres, only: %i[new edit create update]
 
-  # GET /books or /books.json
   def index
-    @books = Book.all
+    @books = Book.includes(:authors, :genres).all
   end
 
-  # GET /books/1 or /books/1.json
   def show
   end
 
-  # GET /books/new
   def new
     @book = Book.new
   end
 
-  # GET /books/1/edit
-  def edit
-  end
-
-  # POST /books or /books.json
   def create
     @book = Book.new(book_params)
 
@@ -36,7 +30,9 @@ class BooksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /books/1 or /books/1.json
+  def edit
+  end
+
   def update
     respond_to do |format|
       if @book.update(book_params)
@@ -51,34 +47,41 @@ class BooksController < ApplicationController
     end
   end
 
-  # DELETE /books/1 or /books/1.json
   def destroy
     @book.destroy!
-    # redirect books_path, notice: "Livro removido com sucesso!"
-
-
-    respond_to do |format|
-      format.html { redirect_to books_path, status: :see_other, notice: "Livro excluído com sucesso" }
-      format.json { head :no_content }
-    end
+    redirect_to books_path, notice: "Livro removido com sucesso!", status: :see_other
   end
 
+  def search
+    book = Book.includes(:authors, :genres).where("title LIKE ?", "%#{params[:title]}%").first
+    if book
+      render json: {
+        id: book.id,
+        title: book.title,
+        authors: book.authors.map(&:name),
+        genres: book.genres.map(&:name),
+        quanty: book.quanty
+      }
+      format.html { redirect_to books_path, status: :see_other, notice: "Livro excluído com sucesso" }
+    else
+      render json: { error: "Livro não encontrado" }, status: :not_found
+    end
+  end
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def book_params
-      params.expect(book: [ :title, :publisher, :year_published, :shelf, :quanty, authors_id: [] ])
-    end
+  def set_book
+    @book = Book.find(params[:id])
+  end
 
-    def load_authors
-      @available_authors = Author.all
-    end
+  def book_params
+    params.require(:book).permit(:title, :publisher, :year_published, :shelf, :quanty, author_ids: [], genre_ids: [])
+  end
 
-    def load_genres
-      @available_genres = Genre.all
-    end
+  def load_authors
+    @available_authors = Author.all
+  end
+
+  def load_genres
+    @available_genres = Genre.all
+  end
 end

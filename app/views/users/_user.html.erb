@@ -5,13 +5,13 @@
   </p>
 
   <p>
-    <strong>Habilitado:</strong>
-    <%= user.habilitaded %>
+    <strong>Ativo:</strong>
+    <%= user.habilitaded? ? "Sim" : "Não" %>
   </p>
 
   <p>
-    <strong>Tipo:</strong>
-    <%= user.role %>
+    <strong>Matrícula:</strong>
+    <%= user.registration %>
   </p>
 
   <p>

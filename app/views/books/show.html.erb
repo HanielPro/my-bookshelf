@@ -4,7 +4,11 @@
 <p><strong>Editora:</strong> <%= @book.publisher %></p>
 <p><strong>Prateleira:</strong> <%= @book.shelf %></p>
 <p><strong>Ano de Publicação:</strong> <%= @book.year_published %></p>
-<p><strong>Autores:</strong> <%= @book.authors.map(&:name).join(", ") %></p>
+
+<p>  <strong> Autores: </strong> <%= @book.authors.any? ? @book.authors.map(&:name).join(", ") : "Nenhum autor cadastrado" %>
+<br>
+<p> <strong> Gêneros: </strong> <%= @book.genres.any? ? @book.genres.map(&:name).join(", ") : "Nenhum gênero cadastrado" %>
+<br>
 
 
 <div>

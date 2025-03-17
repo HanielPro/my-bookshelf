@@ -57,6 +57,24 @@ class UsersController < ApplicationController
     end
   end
 
+
+  def search
+    user = User.includes(:rentals).find_by(registration: params[:registration])
+
+    if user
+      render json: {
+        id: user.id,
+        name: user.name,
+        registration: user.registration,
+        email: user.email,
+        habilitaded: user.habilitaded,
+        rentals: user.rentals
+      }
+    else
+      render json: { error: "Usuário não encontrado" }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -65,6 +83,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :habilitaded, :role, :email, :password ])
+      params.expect(user: [ :name, :habilitaded, :registration, :email, :password ])
     end
 end
