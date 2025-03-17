@@ -1,16 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Authors" %>
+<% content_for :title, "Autores" %>
 
-<h1>Authors</h1>
-
-<div id="authors">
+<h1>Autores</h1>
+<%= link_to "Cadastrar autor", new_author_path, class: "btn btn-primary" %>
+<ul>
   <% @authors.each do |author| %>
-    <%= render author %>
-    <p>
-      <%= link_to "Show this author", author %>
-    </p>
+    <li>
+      <%= link_to author.name, author_path(author) %>
+      Livros: <%= author.books.map(&:title).join(", ") %>
+      <br>
+      Gêneros: <%= author.books.map { |b| b.genres.map(&:name) }.flatten.uniq.join(", ") %>
+      <br>
+      <%= link_to "Editar", edit_author_path(author) %> |
+      <%= link_to "Excluir", author_path(author), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %>
+    </li>
   <% end %>
-</div>
-
-<%= link_to "New author", new_author_path %>
+</ul>

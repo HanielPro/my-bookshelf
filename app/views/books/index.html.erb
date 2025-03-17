@@ -1,18 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Livros Disponíveis</h1>
-<%= link_to "Novo Livro", new_book_path, class: "btn btn-primary" %>
-
+<h1>Livros</h1>
+<%= link_to "Cadastrar Livro", new_book_path, class: "btn btn-primary" %>
 <ul>
   <% @books.each do |book| %>
     <li>
       <%= link_to book.title, book_path(book) %> - 
+
       Autores: <%= book.authors.any? ? book.authors.map(&:name).join(", ") : "Nenhum autor cadastrado" %>
       <br>
       Gêneros: <%= book.genres.any? ? book.genres.map(&:name).join(", ") : "Nenhum gênero cadastrado" %>
       <br>
       <%= link_to "Editar", edit_book_path(book) %> |
-      <%= link_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza?" } %>
+      <%= link_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %>
     </li>
   <% end %>
 </ul>

@@ -1,4 +1,15 @@
 <%= form_with(model: rental) do |form| %>
+  <% if rental.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(rental.errors.count, "error") %> impediram o salvamento deste empréstimo:</h2>
+
+      <ul>
+        <% rental.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <%= hidden_field_tag :book_id, nil, id: "book_id" %>
   <%= hidden_field_tag :user_id, nil, id: "user_id" %>
@@ -46,10 +57,16 @@
   <hr>
 
   <!-- Novo campo para a data de aluguel -->
-  <div>
-    <%= label_tag :rental_date, "Data de Empréstimo" %>
-    <%= text_field_tag :rental_date, Date.today.to_s, id: "rental_date", readonly: true %>
+  <%= form.label :Data_de_empréstimo, style: "display: block" %>
+    <%= form.date_field :rental_date %>
+  
+  <%= form.label :Data_de_devolução_prevista, style: "display: block" %>
+    <%= form.date_field :return_estimate_date %>
   </div>
+  
+  <div>
+    <%= form.label :Data_de_devolução_efetiva, style: "display: block" %>
+    <%= form.date_field :return_date %>
 
   <!-- Novo campo para a data de devolução estimada -->
   <div>
@@ -61,7 +78,7 @@
 
   <!-- Botões de ação -->
   <div>
-    <%= submit_tag "Confirmar Empréstimo", id: "confirm_rental" %>
+    <%= form.submit "Salvar Empréstimo"%>
     <%= link_to "Cancelar", rentals_path, class: "btn btn-secondary" %>
   </div>
 

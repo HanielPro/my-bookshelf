@@ -1,16 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Genres" %>
-
-<h1>Genres</h1>
-
-<div id="genres">
+<h1>Gêneros</h1>
+<%= link_to "Cadastrar gênero", new_genre_path, class: "btn btn-primary" %>
+<ul>
   <% @genres.each do |genre| %>
-    <%= render genre %>
-    <p>
-      <%= link_to "Show this genre", genre %>
-    </p>
+    <li>
+      <%= link_to genre.name, genre_path(genre) %>
+      
+      <br>
+      <%= link_to "Editar", edit_genre_path(genre) %> |
+      <%= link_to "Excluir", genre_path(genre), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %>
+    </li>
   <% end %>
-</div>
-
-<%= link_to "New genre", new_genre_path %>
+</ul>

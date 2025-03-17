@@ -1,8 +1,9 @@
 class Rental < ApplicationRecord
+  
   # enum rental_status: { ativo: 0, devolvido: 1, devolvido_atraso: 2 }
 
-  belongs_to :user
-  belongs_to :book
+  belongs_to :user #Aqui deveria ser has_many, não?
+  belongs_to :book #Aqui deveria ser has_many, não?
 
   before_create :set_default_status
 

@@ -1,7 +1,7 @@
 <%= form_with(model: genre) do |form| %>
   <% if genre.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(genre.errors.count, "error") %> prohibited this genre from being saved:</h2>
+      <h2><%= pluralize(genre.errors.count, "error") %> impediram o salvamento deste gênero:</h2>
 
       <ul>
         <% genre.errors.each do |error| %>
@@ -12,16 +12,16 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :Nome, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :description, style: "display: block" %>
+    <%= form.label :Descrição, style: "display: block" %>
     <%= form.text_field :description %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Salvar Gênero"%>
   </div>
 <% end %>

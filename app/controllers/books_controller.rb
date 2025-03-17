@@ -17,10 +17,16 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
 
-    if @book.save
-      redirect_to @book, notice: "Livro adicionado com sucesso!"
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @book.save
+        format.html { redirect_to @book, notice: "Livro salvo com sucesso" }
+        format.json { render :show, status: :created, location: @book }
+      else
+        load_authors
+        load_genres
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -28,10 +34,16 @@ class BooksController < ApplicationController
   end
 
   def update
-    if @book.update(book_params)
-      redirect_to @book, notice: "Livro atualizado com sucesso!"
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @book.update(book_params)
+        format.html { redirect_to @book, notice: "Livro atualizado com sucesso" }
+        format.json { render :show, status: :ok, location: @book }
+      else
+        load_authors
+        load_genres
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -42,7 +54,6 @@ class BooksController < ApplicationController
 
   def search
     book = Book.includes(:authors, :genres).where("title LIKE ?", "%#{params[:title]}%").first
-
     if book
       render json: {
         id: book.id,
@@ -51,6 +62,7 @@ class BooksController < ApplicationController
         genres: book.genres.map(&:name),
         quanty: book.quanty
       }
+      format.html { redirect_to books_path, status: :see_other, notice: "Livro excluído com sucesso" }
     else
       render json: { error: "Livro não encontrado" }, status: :not_found
     end
