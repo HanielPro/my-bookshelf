@@ -4,7 +4,7 @@ class CreateRentals < ActiveRecord::Migration[8.0]
       t.date :rental_date
       t.date :return_date
       t.date :return_estimate_date
-
+      t.string :rental_status, default: "ativo"
       t.references :book, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
       t.timestamps

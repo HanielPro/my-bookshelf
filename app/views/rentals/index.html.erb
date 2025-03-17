@@ -1,16 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<!-- app/views/rentals/index.html.erb -->
+<%= link_to 'Novo Empréstimo', new_rental_path, class: 'btn btn-primary' %>
 
-<% content_for :title, "Rentals" %>
+<h1>Aluguéis Atuais</h1>
 
-<h1>Rentals</h1>
-
-<div id="rentals">
-  <% @rentals.each do |rental| %>
-    <%= render rental %>
-    <p>
-      <%= link_to "Show this rental", rental %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New rental", new_rental_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Usuário</th>
+      <th>Livro</th>
+      <th>Data de Aluguel</th>
+      <th>Data de Devolução</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rentals.each do |rental| %>
+      <tr>
+        <td><%= rental.user %></td>
+        <td><%= rental.book.title %></td>
+        <td><%= rental.rental_date %></td>
+        <td><%= rental.return_date %></td>
+        <td><%= rental.rental_status.capitalize %></td>
+        <td>
+          <% if rental.rental_status == 'ativo' && rental.return_estimate_date >= Date.today %>  <!-- Só permite prolongar se o status for 'ativo' e a data de devolução não tiver passado -->
+            <%= link_to 'Prolongar prazo', extend_return_estimate_date_rental_path(rental), method: :patch, data: { confirm: 'Tem certeza que deseja prolongar o prazo de devolução?' } %>
+          <% else %>
+            <%= "Prazo já expirado ou status inválido" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
