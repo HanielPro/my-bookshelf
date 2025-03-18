@@ -1,12 +1,11 @@
 <% content_for :title, "Editar Autor" %>
 
-<h1>Editar Autor</h1>
+<div class="container mt-4">
+  <h1>Editar Autor</h1>
+  <%= render "form", author: @author %>
 
-<%= render "form", author: @author %>
-
-<br>
-
-<div>
-  <%= link_to "Exibir este autor", @author %> |
-  <%= link_to "Voltar para a lista", authors_path %>
+  <div class="mt-3">
+    <%= link_to "Exibir este autor", @author, class: "btn btn-secondary" %>
+    <%= link_to "Voltar para a lista", authors_path, class: "btn btn-secondary" %>
+  </div>
 </div>

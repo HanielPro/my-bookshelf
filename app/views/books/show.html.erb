@@ -1,18 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-4">
+  <h1><%= @book.title %></h1>
+  <p><strong>Editora:</strong> <%= @book.publisher %></p>
+  <p><strong>Prateleira:</strong> <%= @book.shelf %></p>
+  <p><strong>Ano de Publicação:</strong> <%= @book.year_published %></p>
 
-<h1><%= @book.title %></h1>
-<p><strong>Editora:</strong> <%= @book.publisher %></p>
-<p><strong>Prateleira:</strong> <%= @book.shelf %></p>
-<p><strong>Ano de Publicação:</strong> <%= @book.year_published %></p>
+  <p><strong>Autores:</strong> <%= @book.authors.any? ? @book.authors.map(&:name).join(", ") : "Nenhum autor cadastrado" %></p>
+  <p><strong>Gêneros:</strong> <%= @book.genres.any? ? @book.genres.map(&:name).join(", ") : "Nenhum gênero cadastrado" %></p>
 
-<p>  <strong> Autores: </strong> <%= @book.authors.any? ? @book.authors.map(&:name).join(", ") : "Nenhum autor cadastrado" %>
-<br>
-<p> <strong> Gêneros: </strong> <%= @book.genres.any? ? @book.genres.map(&:name).join(", ") : "Nenhum gênero cadastrado" %>
-<br>
-
-
-<div>
-    <%= link_to "Voltar para a lista", books_path %>
-    <%= link_to "Editar", edit_book_path(@book) %> |
-    <%= button_to "Apagar", @book, method: :delete %>
+  <div>
+    <%= link_to "Voltar para a lista", books_path, class: "btn btn-secondary" %>
+    <%= link_to "Editar", edit_book_path(@book), class: "btn btn-primary" %>
+    <%= button_to "Apagar", @book, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>

@@ -1,11 +1,12 @@
 <% content_for :title, "Cadastrar Autor" %>
 
-<h1>Cadastrar Autor</h1>
+<% content_for :title, "Cadastrar Autor" %>
 
-<%= render "form", author: @author %>
+<div class="container mt-4">
+  <h1>Cadastrar Autor</h1>
+  <%= render "form", author: @author %>
 
-<br>
-
-<div>
-  <%= link_to "Voltar para a lista", authors_path %>
+  <div class="mt-3">
+    <%= link_to "Voltar para a lista", authors_path, class: "btn btn-secondary" %>
+  </div>
 </div>
