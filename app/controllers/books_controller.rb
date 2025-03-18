@@ -62,11 +62,11 @@ class BooksController < ApplicationController
         genres: book.genres.map(&:name),
         quanty: book.quanty
       }
-      format.html { redirect_to books_path, status: :see_other, notice: "Livro excluído com sucesso" }
     else
       render json: { error: "Livro não encontrado" }, status: :not_found
     end
   end
+
   private
 
   def set_book
