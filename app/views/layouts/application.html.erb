@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title><%= content_for(:title) || "My Bookshelf" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,9 +21,13 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+    <%= render "layouts/header" %>
+    <div class="container mt-4">
+        <%= yield %>
+    </div>
+</body>
+
 </html>
