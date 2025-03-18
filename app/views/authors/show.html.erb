@@ -1,10 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @author %>
+<div class="container mt-4">
+  <p style="color: green"><%= notice %></p>
 
-<div>
-  <%= link_to "Editar este Autor", edit_author_path(@author) %> |
-  <%= link_to "Voltar para a lista", authors_path %>
+  <%= render @author %>
 
-  <%= button_to "Excluir este Autor", @author, method: :delete %>
+  <div>
+    <%= link_to "Editar este Autor", edit_author_path(@author), class: "btn btn-primary" %>
+    <%= link_to "Voltar para a lista", authors_path, class: "btn btn-secondary" %>
+
+    <%= button_to "Excluir este Autor", @author, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>
