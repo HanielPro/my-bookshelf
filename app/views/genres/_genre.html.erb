@@ -1,13 +1,11 @@
-<div id="<%= dom_id genre %>">
-    <p>
-        <strong>Gênero:</strong>
-        <%= genre.name %>
-    </p>
-
+<div id="<%= dom_id genre %>" class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= genre.name %></h5>
     <% if genre.description.present? %>
-    <p>
+      <p class="card-text">
         <strong>Descrição:</strong>
         <%= genre.description %>
-    </p>
+      </p>
     <% end %>
+  </div>
 </div>

@@ -1,10 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-4">
+  <%= render @rental %>
 
-<%= render @rental %>
+  <div>
+    <%= link_to "Editar este Empréstimo", edit_rental_path(@rental), class: "btn btn-primary" %>
+    <%= link_to "Voltar para a lista", rentals_path, class: "btn btn-secondary" %>
 
-<div>
-  <%= link_to "Editar este Empréstimo", edit_rental_path(@rental) %> |
-  <%= link_to "Voltar para a lista", rentals_path %>
-
-  <%= button_to "Excluir este Empréstimo", @rental, method: :delete %>
+    <%= button_to "Excluir este Empréstimo", @rental, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>

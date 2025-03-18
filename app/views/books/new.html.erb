@@ -1,11 +1,10 @@
 <% content_for :title, "Cadastrar Livro" %>
 
-<h1>Cadastrar Livro</h1>
+<div class="container mt-4">
+  <h1>Cadastrar Livro</h1>
+  <%= render "form", book: @book %>
 
-<%= render "form", book: @book %>
-
-<br>
-
-<div>
-  <%= link_to "Voltar para a lista", books_path %>
+  <div class="mt-3">
+    <%= link_to "Voltar para a lista", books_path, class: "btn btn-secondary" %>
+  </div>
 </div>

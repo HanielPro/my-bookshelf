@@ -2,18 +2,27 @@
 
 <% content_for :title, "Autores" %>
 
-<h1>Autores</h1>
-<%= link_to "Cadastrar autor", new_author_path, class: "btn btn-primary" %>
-<ul>
-  <% @authors.each do |author| %>
-    <li>
-      <%= link_to author.name, author_path(author) %>
-      Livros: <%= author.books.map(&:title).join(", ") %>
-      <br>
-      Gêneros: <%= author.books.map { |b| b.genres.map(&:name) }.flatten.uniq.join(", ") %>
-      <br>
-      <%= link_to "Editar", edit_author_path(author) %> |
-      <%= link_to "Excluir", author_path(author), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" } %>
-    </li>
-  <% end %>
-</ul>
+<div class="container mt-4">
+  <h1>Autores</h1>
+  <%= link_to "Cadastrar autor", new_author_path, class: "btn btn-primary mb-3" %>
+
+  <ul class="list-group">
+    <% @authors.each do |author| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <%= link_to author.name, author_path(author) %>
+          <br>
+          <small class="text-muted">
+            Livros: <%= author.books.map(&:title).join(", ") %>
+            <br>
+            Gêneros: <%= author.books.map { |b| b.genres.map(&:name) }.flatten.uniq.join(", ") %>
+          </small>
+        </div>
+        <div>
+          <%= link_to "Editar", edit_author_path(author), class: "btn btn-sm btn-outline-secondary" %>
+          <%= link_to "Excluir", author_path(author), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-sm btn-outline-danger" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

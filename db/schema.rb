@@ -57,6 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_134519) do
     t.date "rental_date"
     t.date "return_date"
     t.date "return_estimate_date"
+    t.string "rental_status", default: "ativo"
     t.integer "book_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
