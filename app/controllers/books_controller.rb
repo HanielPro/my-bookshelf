@@ -12,6 +12,7 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+    @book.authors.build  # Garante que ao menos um form de author seja renderizado
   end
 
   def create
@@ -28,9 +29,6 @@ class BooksController < ApplicationController
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def edit
   end
 
   def update
@@ -74,7 +72,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :publisher, :year_published, :shelf, :quanty, author_ids: [], genre_ids: [])
+    params.require(:book).permit(:title, :publisher, :year_published, :shelf, :quanty, genre_ids: [], author_ids: [], authors_attributes: [:id, :name, :birthdate, :_destroy])
   end
 
   def load_authors
