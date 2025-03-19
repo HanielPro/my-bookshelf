@@ -1,16 +1,29 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
 <% content_for :title, "Usuários" %>
 
-<h1>Usuários</h1>
+<div class="container mt-4">
+  <h1>Usuários</h1>
+  <p class="text-muted">Total de usuários no sistema: <strong><%= @users.count %></strong></p>
 
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Exibir este Usuário", user %>
-    </p>
-  <% end %>
+  <%= link_to "Cadastrar Usuário", new_user_path, class: "btn btn-primary mb-3" %>
+
+  <ul class="list-group">
+    <% @users.each do |user| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <%= link_to user.name, user_path(user), class: "fw-bold text-primary" %>
+          <br>
+          <small class="text-muted">
+            E-mail: <%= user.email %>
+            <br>
+            Criado em: <%= user.created_at.strftime("%d/%m/%Y") %>
+          </small>
+        </div>
+        <div class="d-flex gap-2">
+          <%= link_to "Editar", edit_user_path(user), class: "btn btn-sm btn-outline-secondary" %>
+          <%= button_to "Excluir", user_path(user), method: :delete, data: { confirm: "Tem certeza que deseja excluir?", turbo: false  }, class: "btn btn-sm btn-outline-danger" %>        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>
-
-<%= link_to "Cadastrar Usuário", new_user_path %>
