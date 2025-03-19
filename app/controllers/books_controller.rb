@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  load_and_authorize_resource
   before_action :set_book, only: %i[show edit update destroy]
   before_action :load_authors, only: %i[new edit create update]
   before_action :load_genres, only: %i[new edit create update]
@@ -75,7 +76,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :publisher, :year_published, :shelf, :quanty, genre_ids: [], author_ids: [], authors_attributes: [:id, :name, :birthdate, :_destroy])
+    params.require(:book).permit(:title, :publisher, :year_published, :shelf, :quanty, genre_ids: [], author_ids: [], authors_attributes: [ :id, :name, :birthdate, :_destroy ])
   end
 
   def load_authors

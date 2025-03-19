@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :publications, only: [:destroy]
+  devise_for :users
+  resources :publications, only: [ :destroy ]
+
 
   resources :rentals do
     member do
