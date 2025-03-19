@@ -25,13 +25,16 @@
                             <%= rental.rental_status.capitalize %>
                         </span>
                     </td>
-                    <td>
-                        <% if rental.rental_status == 'ativo' && rental.return_estimate_date >= Date.today %>
-                        <%= link_to 'Prolongar Prazo', extend_return_estimate_date_rental_path(rental), method: :patch, class: "btn btn-sm btn-info h-50", data: { confirm: 'Tem certeza que deseja prolongar o prazo de devolução?' } %>
-                        <% else %>
-                        <span class="text-danger">Prazo expirado ou status inválido</span>
+                    <td class="d-flex w-100 flex-column gap-2">
+                        <% if rental.rental_status == 'ativo' %>
+                        <%= link_to 'Prolongar Prazo', extend_rental_path(rental), method: :patch, class: "btn btn-sm btn-info h-50", data: { confirm: 'Tem certeza que deseja prolongar o prazo de devolução?' } %>
                         <% end %>
                         <%= link_to "Mais Informações", rental_path(rental), class: "h-50 btn btn-secondary" %>
+                        <% if rental.return_date.nil? %>
+                        <%= link_to "Devolver Empréstimo", return_rental_path(rental), method: :patch, class: "h-50 btn btn-warning", data: { confirm: 'Tem certeza que deseja devolver este livro?' } %>
+                        <% else %>
+                        <span class= "h-50 btn btn-warning">Devolução não disponível</span>
+                        <% end %>
                     </td>
                 </tr>
                 <% end %>

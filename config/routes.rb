@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   resources :rentals do
     member do
-      patch "return", to: "rentals#return_rental"
-    patch "extend_return_estimate_date"# Endpoint para prolongar o prazo de devolução
+      get "extend", to: "rentals#extend_return_date"  # Especificar a ação
+      get "return", to: "rentals#return_rental"
     end
-  end
+    end
 
   resources :books do
     collection do

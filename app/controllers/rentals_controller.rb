@@ -93,8 +93,8 @@ class RentalsController < ApplicationController
 
   def return_rental
     @rental = Rental.find(params[:id])  # Encontra o aluguel com base no ID
-    if @rental.returned_at.nil?  # Se o livro ainda não foi devolvido
-      @rental.update(returned_at: Time.current)  # Registra a data de devolução
+    if @rental.return_date.nil?  # Se o livro ainda não foi devolvido
+      @rental.update(return_date: Time.current)  # Registra a data de devolução
       @rental.update_status_on_return  # Atualiza o status com base na data de devolução
       book = @rental.book
       book.update(quanty: book.quanty + 1)  # Aumenta a quantidade de cópias do livro
@@ -105,7 +105,7 @@ class RentalsController < ApplicationController
   end
 
   # Ação para prolongar o prazo de devolução
-  def extend_return_estimate_date
+  def extend_return_date
     @rental = Rental.find(params[:id])
 
     # Verifica se a data atual é menor ou igual à data de devolução
