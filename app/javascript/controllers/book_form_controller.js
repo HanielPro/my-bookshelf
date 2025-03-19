@@ -21,7 +21,10 @@ export default class extends Controller {
 
   addAuthor() {
     let association = this.authorFieldsTarget.dataset.association || 'authors';
-    let content = this.authorFieldsTarget.dataset.associationInsertContent || this.buildAssociationField(association);
+    let new_id = new Date().getTime();  // Use a timestamp for a unique ID
+    let regexp = new RegExp("new_" + association, "g");
+    let content = this.authorFieldsTarget.dataset.associationInsertContent.replace(regexp, new_id);
+
     this.authorFieldsTarget.insertAdjacentHTML('beforeend', content);
   }
 }

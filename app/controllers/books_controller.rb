@@ -31,6 +31,9 @@ class BooksController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
     respond_to do |format|
       if @book.update(book_params)

@@ -55,14 +55,19 @@
   </div>
 
   <div id="existing-authors" data-book-form-target="existingAuthors" style="display: <%= @book.authors.any? ? 'none' : 'block' %>;">
-    <%= form.collection_select :author_ids, Author.all, :id, :name, {}, { multiple: true, class: "form-select" } %>
+    <%= form.collection_check_boxes :author_ids, Author.all, :id, :name do |b| %>
+      <div class="form-check">
+        <%= b.check_box class: "form-check-input" %>
+        <%= b.label class: "form-check-label" %>
+      </div>
+    <% end %>
   </div>
 
   <div id="new-authors" data-book-form-target="newAuthors" style="display: <%= @book.authors.any? ? 'block' : 'none' %>;">
     <%= form.fields_for :authors do |author_form| %>
       <%= render 'author_fields', f: author_form %>
     <% end %>
-    <div data-book-form-target="authorFields" data-association="authors" data-association-insert-content="<%= form.fields_for(:authors, @book.authors.build, child_index: 'new_authors') { |author_form| render 'author_fields', f: author_form }.gsub("\n", "") %>">
+    <div data-book-form-target="authorFields" data-association="authors" data-association-insert-content="<%= form.fields_for(:authors, Author.new, child_index: Time.now.to_i) { |author_form| render 'author_fields', f: author_form }.gsub("\n", "") %>">
 
     </div>
     <button type="button" data-action="book-form#addAuthor">Adicionar Autor</button>

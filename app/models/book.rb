@@ -4,6 +4,7 @@ class Book < ApplicationRecord
   has_many :genres, through: :categories
   has_many :publications, dependent: :destroy, inverse_of: :book
   has_many :authors, through: :publications
+  has_many :users, through: :rentals
 
   accepts_nested_attributes_for :publications, allow_destroy: true
 
