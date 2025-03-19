@@ -1,10 +1,39 @@
 <div class="container mt-4">
-  <%= render @rental %>
+  <!-- Exibindo as informações do empréstimo -->
+  <div class="card p-4 shadow">
+    <h4>Empréstimo de Livro</h4>
 
-  <div>
-    <%= link_to "Editar este Empréstimo", edit_rental_path(@rental), class: "btn btn-primary" %>
-    <%= link_to "Voltar para a lista", rentals_path, class: "btn btn-secondary" %>
+    <!-- Informações gerais do empréstimo -->
+    <p><strong>Livro:</strong> <%= @rental.book.title %></p>
+    <p><strong>Usuário:</strong> <%= @rental.user.name %></p>
+    <p><strong>Data de Empréstimo:</strong> <%= @rental.rental_date %></p>
+    <p><strong>Data Estimada de Devolução:</strong> <%= @rental.return_estimate_date %></p>
 
-    <%= button_to "Excluir este Empréstimo", @rental, method: :delete, class: "btn btn-danger" %>
+    <!-- Status do Empréstimo com cores -->
+    <p>
+      <strong>Status:</strong> 
+      <span class="<%= @rental.rental_status %>">
+        <%= @rental.rental_status.capitalize %>
+      </span>
+    </p>
+
+    <!-- Botões -->
+    <div class="mt-4">
+      <!-- Botão para Prolongar o Empréstimo -->
+      <% if @rental.rental_status == "ativo" %>
+        <%= link_to "Prolongar Prazo", edit_rental_path(@rental), class: "btn btn-primary" %>
+      <% end %>
+
+      <!-- Botão para Devolver o Empréstimo -->
+      <% if @rental.rental_status == "ativo" %>
+        <%= link_to "Devolver Empréstimo", return_rental_path(@rental), method: :patch, class: "btn btn-warning" %>
+      <% end %>
+
+      <!-- Botão para Excluir -->
+      <%= button_to "Excluir este Empréstimo", @rental, method: :delete, class: "btn btn-danger" %>
+
+      <!-- Botão para Voltar para a lista de empréstimos -->
+      <%= link_to "Voltar para a lista", rentals_path, class: "btn btn-secondary" %>
+    </div>
   </div>
 </div>

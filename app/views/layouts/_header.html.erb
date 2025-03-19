@@ -1,26 +1,34 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <!-- Título do projeto -->
-    <a class="navbar-brand" href="<%= root_path %>">My Bookshelf</a>
+    <div class="container">
+        <!-- Título do projeto -->
+        <a class="navbar-brand" href="<%= root_path %>">My Bookshelf</a>
 
-    <!-- Ícone de login/logout -->
-<%
+        <!-- Ícone Para Painel do Administrador -->
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item" id="adm-icon-button">
+                <a class="navbar-text text-white" href="<%= admin_dashboard_path %>">
+                    <i class="bi bi-menu-button-wide-fill"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <%
 =begin%>
-     <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
+    <!-- Ícone de login/logout -->
+    <li class="nav-item">
 
         <% if user_signed_in? %>
 
-          <span class="navbar-text text-white">
-           <i class="bi bi-person"></i> <%= current_user.name %>
-          </span>
-          <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
+        <span class="navbar-text text-white">
+            <i class="bi bi-person"></i> <%= current_user.name %>
+        </span>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm ms-2" %>
         <% else %>
-          <%= link_to "Login", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
+        <%= link_to "Login", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
         <% end %>
-      </li>
-    </ul> 
-<%
+    </li>
+    <%
 =end%>
-  </div>
 </nav>

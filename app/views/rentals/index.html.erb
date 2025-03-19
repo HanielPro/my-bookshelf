@@ -1,51 +1,41 @@
 <div class="container mt-4">
-  <a href="<%= new_rental_path %>" class="btn btn-success mb-3">Cadastrar Empréstimo</a>
-  <ul class="list-group">
-    <% @rentals.each do |rental| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <strong><%= link_to rental.name, rental_path(rental), class: "text-decoration-none" %></strong><br>
-          <a href="<%= edit_rental_path(rental) %>" class="btn btn-sm btn-warning">Editar</a>
-          <%= link_to "Excluir", rental_path(rental), method: :delete, class: "btn btn-sm btn-danger", data: { confirm: "Tem certeza que deseja excluir?" } %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+    <a href="<%= new_rental_path %>" class="btn btn-success mb-3">Novo Empréstimo</a>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-bordered">
-      <thead class="table-dark">
-        <tr>
-          <th>Usuário</th>
-          <th>Livro</th>
-          <th>Data do Empréstimo</th>
-          <th>Data de Devolução</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @rentals.each do |rental| %>
-          <tr>
-            <td><%= rental.user %></td>
-            <td><%= rental.book.title %></td>
-            <td><%= rental.rental_date %></td>
-            <td><%= rental.return_date %></td>
-            <td>
-              <span class="badge <%= rental.rental_status == 'ativo' ? 'bg-success' : 'bg-danger' %>">
-                <%= rental.rental_status.capitalize %>
-              </span>
-            </td>
-            <td>
-              <% if rental.rental_status == 'ativo' && rental.return_estimate_date >= Date.today %>
-                <%= link_to 'Prolongar Prazo', extend_return_estimate_date_rental_path(rental), method: :patch, class: "btn btn-sm btn-info", data: { confirm: 'Tem certeza que deseja prolongar o prazo de devolução?' } %>
-              <% else %>
-                <span class="text-danger">Prazo expirado ou status inválido</span>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Usuário</th>
+                    <th>Livro</th>
+                    <th>Data do Empréstimo</th>
+                    <th>Data Prevista Para Devolução</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @rentals.each do |rental| %>
+                <tr>
+                    <td><%= rental.user.name %></td>
+                    <td><%= rental.book.title %></td>
+                    <td><%= rental.rental_date %></td>
+                    <td><%= rental.return_estimate_date %></td>
+                    <td>
+                        <span class="badge <%= rental.rental_status_class %>">
+                            <%= rental.rental_status.capitalize %>
+                        </span>
+                    </td>
+                    <td>
+                        <% if rental.rental_status == 'ativo' && rental.return_estimate_date >= Date.today %>
+                        <%= link_to 'Prolongar Prazo', extend_return_estimate_date_rental_path(rental), method: :patch, class: "btn btn-sm btn-info h-50", data: { confirm: 'Tem certeza que deseja prolongar o prazo de devolução?' } %>
+                        <% else %>
+                        <span class="text-danger">Prazo expirado ou status inválido</span>
+                        <% end %>
+                        <%= link_to "Mais Informações", rental_path(rental), class: "h-50 btn btn-secondary" %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
 </div>
