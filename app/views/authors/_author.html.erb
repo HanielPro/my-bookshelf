@@ -1,12 +1,9 @@
-<div id="<%= dom_id author %>">
-  <p>
-    <strong>Name:</strong>
-    <%= author.name %>
-  </p>
-
-  <p>
-    <strong>Birthdate:</strong>
-    <%= author.birthdate %>
-  </p>
-
+<div id="<%= dom_id author %>" class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= author.name %></h5>
+    <p class="card-text">
+      <strong>Data de Nascimento:</strong>
+      <%= author.birthdate&.strftime('%d/%m/%Y') || 'Não informada' %>  <!--Formatando a data-->
+    </p>
+  </div>
 </div>

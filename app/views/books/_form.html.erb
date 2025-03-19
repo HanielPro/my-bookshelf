@@ -1,48 +1,79 @@
-<%= form_with(model: book) do |form| %>
-<% if book.errors.any? %>
-<div style="color: red">
-    <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
-
-    <ul>
+<%= form_with(model: book, class: "row g-3", data: { controller: "book-form" }) do |form| %>
+  <% if book.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h2><%= pluralize(book.errors.count, "error") %> impediram o salvamento deste livro:</h2>
+      <ul>
         <% book.errors.each do |error| %>
-        <li><%= error.full_message %></li>
+          <li><%= error.full_message %></li>
         <% end %>
-    </ul>
-</div>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-md-6">
+    <%= form.label :title, "Título", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :publisher, "Editora", class: "form-label" %>
+    <%= form.text_field :publisher, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :year_published, "Ano de Publicação", class: "form-label" %>
+    <%= form.number_field :year_published, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :shelf, "Número da Prateleira", class: "form-label" %>
+    <%= form.text_field :shelf, class: "form-control" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= form.label :quanty, "Quantidade", class: "form-label" %>
+    <%= form.number_field :quanty, class: "form-control" %>
+  </div>
+
+  <div class="col-12">
+    <%= form.label :genre_ids, "Gêneros", class: "form-label" %>
+    <div class="d-flex flex-wrap">
+      <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) do |b| %>
+        <div class="form-check me-3">
+          <%= b.check_box(class: "form-check-input") %>
+          <%= b.label(class: "form-check-label") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <%= radio_button_tag 'author_option', 'existing', true, data: {action: "book-form#toggleAuthorFields"}%>
+    <%= label_tag 'author_option_existing', 'Selecionar Autores existentes' %>
+    <%= radio_button_tag 'author_option', 'new', false, data: {action: "book-form#toggleAuthorFields"}%>
+    <%= label_tag 'author_option_new', 'Adicionar novos Autores' %>
+  </div>
+
+  <div id="existing-authors" data-book-form-target="existingAuthors" style="display: <%= @book.authors.any? ? 'none' : 'block' %>;">
+    <%= form.collection_check_boxes :author_ids, Author.all, :id, :name do |b| %>
+      <div class="form-check">
+        <%= b.check_box class: "form-check-input" %>
+        <%= b.label class: "form-check-label" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="new-authors" data-book-form-target="newAuthors" style="display: <%= @book.authors.any? ? 'block' : 'none' %>;">
+    <%= form.fields_for :authors do |author_form| %>
+      <%= render 'author_fields', f: author_form %>
+    <% end %>
+    <div data-book-form-target="authorFields" data-association="authors" data-association-insert-content="<%= form.fields_for(:authors, Author.new, child_index: Time.now.to_i) { |author_form| render 'author_fields', f: author_form }.gsub("\n", "") %>">
+
+    </div>
+    <button type="button" data-action="book-form#addAuthor">Adicionar Autor</button>
+  </div>
+
+  <div class="col-12">
+    <%= form.submit "Salvar Livro", class: "btn btn-success" %>
+  </div>
 <% end %>
-
-<div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-</div>
-
-<div>
-    <%= form.label :publisher, style: "display: block" %>
-    <%= form.text_field :publisher %>
-</div>
-
-<div>
-    <%= form.label :year_published, style: "display: block" %>
-    <%= form.number_field :year_published %>
-</div>
-
-<div>
-    <%= form.label :shelf, style: "display: block" %>
-    <%= form.text_field :shelf %>
-</div>
-
-<div>
-    <%= form.label :quanty, style: "display: block" %>
-    <%= form.number_field :quanty %>
-</div>
-
-<div id="genres-fields">
-    <%= form.label :genre_ids, "Gêneros" %><br>
-    <%= form.collection_check_boxes(:genre_ids, Genre.all, :id, :name) %>
-</div>
-
-<div>
-    <%= form.submit %>
-</div>
-<% end %>
-

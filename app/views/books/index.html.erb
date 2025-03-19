@@ -1,17 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
-<h1>Livros Disponíveis</h1>
-<%= link_to "Novo Livro", new_book_path, class: "btn btn-primary" %>
-<ul>
-  <% @books.each do |book| %>
-    <li>
-      <%= link_to book.title, book_path(book) %> - 
-      Autores: <%= book.authors.map(&:name).join(", ") %>
-      <br>
-      Gêneros: <%= book.genres.map(&:name).join(", ") %>
-      <br>
-      <%= link_to "Editar", edit_book_path(book) %> |
-      <%= link_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza?" } %>
-    </li>
-  <% end %>
-</ul>
+<% content_for :title, "Livros" %>
+
+<div class="container mt-4">
+  <h1>Livros</h1>
+  <p class="text-muted">Total de livros disponíveis: <strong><%= @books.count %></strong></p>
+
+  <%= link_to "Cadastrar Livro", new_book_path, class: "btn btn-primary mb-3" %>
+
+  <ul class="list-group">
+    <% @books.each do |book| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <%= link_to book.title, book_path(book) %>
+          <br>
+          <small class="text-muted">
+            Autores: <%= book.authors.any? ? book.authors.map(&:name).join(", ") : "Nenhum autor cadastrado" %>
+            <br>
+            Gêneros: <%= book.genres.any? ? book.genres.map(&:name).join(", ") : "Nenhum gênero cadastrado" %>
+          </small>
+        </div>
+        <div class="d-flex gap-2">
+          <%= link_to "Editar", edit_book_path(book), class: "btn btn-sm btn-outline-secondary" %>
+          <%= button_to "Excluir", book_path(book), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-sm btn-outline-danger" %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<br>

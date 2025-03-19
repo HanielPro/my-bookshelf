@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">Painel Administrativo</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="d-flex justify-content-center">
+            <div class="card shadow-sm mb-3 text-center" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">Empréstimos</h5>
+                    <p class="card-text">Acompanhe os empréstimos realizados.</p>
+
+                    <div class="d-flex flex-column gap-2">
+                        <a href="<%= rentals_path %>" class="btn btn-primary">Listar Empréstimos</a>
+                        <a href="<%= new_rental_path %>" class="btn btn-success">Cadastrar Empréstimo</a>
+                        <a href="<%= new_rental_path %>" class="btn btn-danger">Devolução de Empréstimo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Usuários</h5>
+                    <p class="card-text">Gerencie os usuários cadastrados no sistema.</p>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="<%= users_path %>" class="btn btn-primary">Visualizar Usuários</a>
+                        <a href="<%= new_user_path %>" class="btn btn-success">Cadastrar Usuário</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Livros</h5>
+                    <p class="card-text">Veja e gerencie todos os livros disponíveis.</p>
+                    <div class="d-flex flex-column gap-2">
+                        <a href="<%= books_path %>" class="btn btn-primary">Listar Livros</a>
+                        <a href="<%= new_book_path %>" class="btn btn-success">Cadastrar Livro</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Autores</h5>
+                    <p class="card-text">Gerencie os autores cadastrados no sistema.</p>
+                    <div class="d-flex flex-column gap-2">
+                    <a href="<%= authors_path %>" class="btn btn-primary">Listar Autores</a>
+                    <a href="<%= new_author_path %>" class="btn btn-success">Cadastrar Autor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Gêneros</h5>
+                    <p class="card-text">Gerencie os gêneros literários cadastrados.</p>
+                    <div class="d-flex flex-column gap-2">
+                    <a href="<%= genres_path %>" class="btn btn-primary">Listar Gêneros</a>
+                    <a href="<%= new_genre_path %>" class="btn btn-success">Cadastrar Gênero</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

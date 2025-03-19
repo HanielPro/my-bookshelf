@@ -1,32 +1,130 @@
-<%= form_with(model: rental) do |form| %>
-  <% if rental.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(rental.errors.count, "error") %> prohibited this rental from being saved:</h2>
+<div class="container mt-4">
+    <%= form_with(model: rental, id: "rental_form", class: "card p-4 shadow", data: { turbo: false }) do |form| %>
+    <%= form.hidden_field :book_id, id: "book_id" %>
+    <%= form.hidden_field :user_id, id: "user_id" %>
 
-      <ul>
-        <% rental.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <% if rental.errors.any? %>
+    <div class="alert alert-danger">
+        <h4><%= pluralize(rental.errors.count, "erro") %> impediram o salvamento deste empréstimo:</h4>
+        <ul>
+            <% rental.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
     </div>
-  <% end %>
+    <% end %>
 
-  <div>
-    <%= form.label :rental_date, style: "display: block" %>
-    <%= form.date_field :rental_date %>
-  </div>
 
-  <div>
-    <%= form.label :return_date, style: "display: block" %>
-    <%= form.date_field :return_date %>
-  </div>
 
-  <div>
-    <%= form.label :return_estimate_date, style: "display: block" %>
-    <%= form.date_field :return_estimate_date %>
-  </div>
+    <!-- Busca do Livro -->
+    <div class="mb-3">
+        <%= label_tag :book_name, "Nome do Livro", class: "form-label" %>
+        <div class="input-group">
+            <%= text_field_tag :book_name, nil, id: "book_name", class: "form-control" %>
+            <button type="button" id="search_book" class="btn btn-primary">Buscar</button>
+        </div>
+        <p id="book_error" class="text-danger mt-2" style="display: none;">Livro não encontrado.</p>
+    </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div id="book_info" class="alert alert-info" style="display: none;">
+        <h5>Informações do Livro</h5>
+        <p><strong>Título:</strong> <span id="book_title"></span></p>
+        <p><strong>Autor(es):</strong> <span id="book_authors"></span></p>
+        <p><strong>Gênero(s):</strong> <span id="book_genres"></span></p>
+        <p><strong>Quantidade disponível:</strong> <span id="book_quanty"></span></p>
+    </div>
+
+    <!-- Busca do Usuário -->
+    <div class="mb-3">
+        <%= label_tag :user_registration, "Matrícula do Usuário", class: "form-label" %>
+        <div class="input-group">
+            <%= text_field_tag :user_registration, nil, id: "user_registration", class: "form-control" %>
+            <button type="button" id="search_user" class="btn btn-primary">Buscar</button>
+        </div>
+        <p id="user_error" class="text-danger mt-2" style="display: none;">Usuário não encontrado.</p>
+    </div>
+
+    <div id="user_info" class="alert alert-info" style="display: none;">
+        <h5>Informações do Usuário</h5>
+        <p><strong>Nome:</strong> <span id="user_name"></span></p>
+        <p><strong>Email:</strong> <span id="user_email"></span></p>
+        <p><strong>Habilitado:</strong> <span id="user_habilitaded"></span></p>
+    </div>
+
+    <!-- Datas do Empréstimo -->
+    <div class="d-flex w-100">
+        <div class="mb-3 w-50">
+            <%= form.label :rental_date, "Data de Empréstimo", class: "form-label", for: "rental_date" %>
+            <%= form.date_field :rental_date, value: Date.today, class: "form-control", id: "rental_date" %>
+        </div>
+        <div class="mb-3 w-50">
+            <%= form.label :return_estimate_date, "Data Estimada de Devolução", class: "form-label", for: "return_estimate_date" %>
+            <%= form.date_field :return_estimate_date, value: (Date.today + 25.days), id: "return_estimate_date", class: "form-control", readonly: true %>
+        </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="d-flex justify-content-between">
+        <%= form.submit "Salvar Empréstimo", class: "btn btn-success" %>
+        <%= link_to "Cancelar", rentals_path, class: "btn btn-secondary" %>
+    </div>
+    <% end %>
+</div>
+
+<!-- Script para buscar livro e usuário -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Buscar livro
+        document.getElementById("search_book").addEventListener("click", function() {
+            const bookName = document.getElementById("book_name").value;
+            fetch(`/books/search?title=${bookName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("book_error").style.display = "block";
+                        document.getElementById("book_info").style.display = "none";
+                    } else {
+                        document.getElementById("book_error").style.display = "none";
+                        document.getElementById("book_info").style.display = "block";
+                        document.getElementById("book_title").textContent = data.title;
+                        document.getElementById("book_authors").textContent = data.authors ? data.authors.join(", ") : "Desconhecido";
+                        document.getElementById("book_genres").textContent = data.genres ? data.genres.join(", ") : "Não categorizado";
+                        document.getElementById("book_quanty").textContent = data.quanty || "0";
+                        document.getElementById("book_id").value = data.id;
+                    }
+                })
+                .catch(error => console.error("Erro na busca do livro:", error));
+        });
+
+        // Buscar usuário
+        document.getElementById("search_user").addEventListener("click", function() {
+            const userRegistration = document.getElementById("user_registration").value;
+            fetch(`/users/search?registration=${userRegistration}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("user_error").style.display = "block";
+                        document.getElementById("user_info").style.display = "none";
+                    } else {
+                        document.getElementById("user_error").style.display = "none";
+                        document.getElementById("user_info").style.display = "block";
+                        document.getElementById("user_name").textContent = data.name;
+                        document.getElementById("user_email").textContent = data.email;
+                        document.getElementById("user_habilitaded").textContent = data.habilitaded ? "Sim" : "Não";
+                        document.getElementById("user_id").value = data.id;
+                    }
+                })
+                .catch(error => console.error("Erro na busca do usuário:", error));
+        });
+
+        // Verificação antes de enviar o formulário
+        document.getElementById("rental_form").addEventListener("submit", function(event) {
+            const bookId = document.getElementById("book_id").value;
+            const userId = document.getElementById("user_id").value;
+            if (!bookId || !userId) {
+                alert("Selecione um livro e um usuário antes de confirmar o empréstimo.");
+                event.preventDefault();
+            }
+        });
+    });
+</script>

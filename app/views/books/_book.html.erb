@@ -1,33 +1,11 @@
-<div id="<%= dom_id book %>">
-    <p>
-        <strong>Título:</strong>
-        <%= book.title %>
+<div id="<%= dom_id book %>" class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= book.title %></h5>
+    <p class="card-text">
+      <strong>Editora:</strong> <%= book.publisher %><br>
+      <strong>Ano de Publicação:</strong> <%= book.year_published %><br>
+      <strong>Prateleira:</strong> <%= book.shelf %><br>
+      <strong>Quantidade:</strong> <%= book.quanty %>
     </p>
-
-    <p>
-        <strong>Editora:</strong>
-        <%= book.publisher %>
-    </p>
-
-    <p>
-        <strong>Ano de Publicação:</strong>
-        <%= book.year_published %>
-    </p>
-
-    <p>
-        <strong>Prateleira:</strong>
-        <%= book.shelf %>
-    </p>
-
-    <p>
-        <strong>Quantidade:</strong>
-        <%= book.quanty %>
-    </p>
-
-    <p>
-        <strong>Autores:</strong>
-        <%= book.authors %>
-    </p>
-
-
+  </div>
 </div>

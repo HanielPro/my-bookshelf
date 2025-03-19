@@ -1,10 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @genre %>
+<% content_for :title, "Detalhes do Gênero" %>
 
-<div>
-  <%= link_to "Edit this genre", edit_genre_path(@genre) %> |
-  <%= link_to "Back to genres", genres_path %>
+<div class="container mt-4">
+  <h1>Detalhes do Gênero</h1>
 
-  <%= button_to "Destroy this genre", @genre, method: :delete %>
+  <div class="card">
+    <div class="card-header">
+      <%= @genre.name %>
+    </div>
+    <div class="card-body">
+      <p><strong>Descrição:</strong> <%= @genre.description.present? ? @genre.description : "Sem descrição" %></p>
+
+      <div class="mt-3 d-flex gap-2">
+        <%= link_to "Editar", edit_genre_path(@genre), class: "btn btn-primary" %>
+        <%= link_to "Voltar", genres_path, class: "btn btn-secondary" %>
+        <%= button_to "Excluir este Gênero", @genre, method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
 </div>

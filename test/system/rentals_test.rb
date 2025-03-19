@@ -16,7 +16,7 @@ class RentalsTest < ApplicationSystemTestCase
 
     fill_in "Rental date", with: @rental.rental_date
     fill_in "Return date", with: @rental.return_date
-    fill_in "Return estimate date", with: @rental.return_estimate_date
+    fill_in "Schedules return date", with: @rental.return_estimate_date
     click_on "Create Rental"
 
     assert_text "Rental foi criado com sucesso"
@@ -29,7 +29,7 @@ class RentalsTest < ApplicationSystemTestCase
 
     fill_in "Rental date", with: @rental.rental_date
     fill_in "Return date", with: @rental.return_date
-    fill_in "Return estimate date", with: @rental.return_estimate_date
+    fill_in "Schedules return date", with: @rental.return_estimate_date
     click_on "Update Rental"
 
     assert_text "Rental was successfully updated"

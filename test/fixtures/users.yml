@@ -3,13 +3,13 @@
 one:
   name: MyString
   habilitaded: false
-  role: MyString
+  registration: MyString
   email: MyString
   password: MyString
 
 two:
   name: MyString
   habilitaded: false
-  role: MyString
+  registration: MyString
   email: MyString
   password: MyString

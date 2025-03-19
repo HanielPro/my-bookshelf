@@ -1,12 +1,11 @@
-<% content_for :title, "Editing rental" %>
+<% content_for :title, "Editar Empréstimo" %>
 
-<h1>Editing rental</h1>
+<div class="container mt-4">
+  <h1>Editar Empréstimo</h1>
+  <%= render "form", rental: @rental %>
 
-<%= render "form", rental: @rental %>
-
-<br>
-
-<div>
-  <%= link_to "Show this rental", @rental %> |
-  <%= link_to "Back to rentals", rentals_path %>
+  <div class="mt-3">
+    <%= link_to "Exibir este Empréstimo", @rental, class: "btn btn-secondary" %>
+    <%= link_to "Voltar para a lista", rentals_path, class: "btn btn-secondary" %>
+  </div>
 </div>

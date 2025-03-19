@@ -1,17 +1,9 @@
-<div id="<%= dom_id rental %>">
-  <p>
-    <strong>Rental date:</strong>
-    <%= rental.rental_date %>
-  </p>
-
-  <p>
-    <strong>Return date:</strong>
-    <%= rental.return_date %>
-  </p>
-
-  <p>
-    <strong>Return estimate date:</strong>
-    <%= rental.return_estimate_date %>
-  </p>
-
+<div id="<%= dom_id rental %>" class="card shadow-sm mb-3">
+  <div class="card-body">
+    <p>
+      <strong>Data do Empréstimo:</strong> <%= rental.rental_date %><br>
+      <strong>Data de Devolução Prevista:</strong> <%= rental.return_estimate_date %><br>
+      <strong>Data de Devolução Efetiva:</strong> <%= rental.return_date %>
+    </p>
+  </div>
 </div>

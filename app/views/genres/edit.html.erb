@@ -1,12 +1,11 @@
-<% content_for :title, "Editing genre" %>
+<% content_for :title, "Editar Gênero" %>
 
-<h1>Editing genre</h1>
+<div class="container mt-4">
+  <h1>Editar Gênero</h1>
+  <%= render "form", genre: @genre %>
 
-<%= render "form", genre: @genre %>
-
-<br>
-
-<div>
-  <%= link_to "Show this genre", @genre %> |
-  <%= link_to "Back to genres", genres_path %>
+  <div class="mt-3">
+    <%= link_to "Exibir este Gênero", @genre, class: "btn btn-info" %>
+    <%= link_to "Voltar para a lista", genres_path, class: "btn btn-secondary" %>
+  </div>
 </div>

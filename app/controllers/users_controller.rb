@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User foi criado com sucesso." }
+        format.html { redirect_to @user, notice: "Usuário salvo com sucesso" }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User foi atualizado com sucesso!" }
+        format.html { redirect_to @user, notice: "Usuário atualizado com sucesso" }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,8 +52,26 @@ class UsersController < ApplicationController
     @user.destroy!
 
     respond_to do |format|
-      format.html { redirect_to users_path, status: :see_other, notice: "User foi removido com sucesso!" }
+      format.html { redirect_to users_path, status: :see_other, notice: "Usuário excluído com sucesso" }
       format.json { head :no_content }
+    end
+  end
+
+
+  def search
+    user = User.includes(:rentals).find_by(registration: params[:registration])
+
+    if user
+      render json: {
+        id: user.id,
+        name: user.name,
+        registration: user.registration,
+        email: user.email,
+        habilitaded: user.habilitaded,
+        rentals: user.rentals
+      }
+    else
+      render json: { error: "Usuário não encontrado" }, status: :not_found
     end
   end
 
@@ -65,6 +83,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :habilitaded, :role, :email, :password ])
+      params.expect(user: [ :name, :habilitaded, :registration, :email, :password ])
     end
 end
