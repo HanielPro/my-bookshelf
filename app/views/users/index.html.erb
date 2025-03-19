@@ -4,6 +4,8 @@
 
 <div class="container mt-4">
   <h1>Usuários</h1>
+  <p class="text-muted">Total de usuários no sistema: <strong><%= @users.count %></strong></p>
+
   <%= link_to "Cadastrar Usuário", new_user_path, class: "btn btn-primary mb-3" %>
 
   <ul class="list-group">
