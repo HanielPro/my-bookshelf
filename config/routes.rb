@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   resources :rentals do
     member do
-      patch "return_book"  # Endpoint para devolução do livro
-      patch "extend_return_estimate_date"  # Endpoint para prolongar o prazo de devolução
+      patch "return", to: "rentals#return_rental"
+    patch "extend_return_estimate_date"# Endpoint para prolongar o prazo de devolução
     end
   end
 
@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get "dashboard", to: "dashboard#index"
   end
-
 
   resources :genres
   resources :authors

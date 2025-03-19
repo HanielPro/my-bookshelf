@@ -19,16 +19,42 @@ class RentalsController < ApplicationController
   # GET /rentals/1/edit
   def edit
   end
-
-  # POST /rentals or /rentals.json
   def create
+    puts "Params: #{params.inspect}"  # Adicione essa linha para verificar os parâmetros
+
     @rental = Rental.new(rental_params)
     book = Book.find(@rental.book_id)
-    if book.available?
-      book.update(quantity: book.quantity - 1)  # Diminui a quantidade disponível do livro
-    else
-      format.html { render :new, notice: "Livro Não Disponível." }
+    user = User.find(@rental.user_id)
+
+    # Verificando se o usuário já possui o livro emprestado
+    if Rental.exists?(user: user, book: book, rental_status: "ativo")
+      respond_to do |format|
+        format.html { redirect_to rentals_path, alert: "esse livro já foi emprestado para este usuário." }
+        format.json { render json: { error: "Você esse livro já foi emprestado para este usuário." }, status: :unprocessable_entity }
+      end
+      return
     end
+
+    respond_to do |format|
+      if book.available?
+        book.update(quanty: book.quanty - 1)  # Diminui a quantidade disponível do livro
+        if @rental.save
+          format.html { redirect_to @rental, notice: "Empréstimo salvo com sucesso" }
+          format.json { render :show, status: :created, location: @rental }
+          return
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @rental.errors, status: :unprocessable_entity }
+          return
+        end
+      else
+        format.html { render :new, notice: "Livro Não Disponível." }
+        format.json { render json: { error: "Livro Não Disponível" }, status: :unprocessable_entity }
+        return
+      end
+    end
+
+
 
     respond_to do |format|
       if @rental.save
@@ -65,13 +91,13 @@ class RentalsController < ApplicationController
   end
 
 
-  def return_book
+  def return_rental
     @rental = Rental.find(params[:id])  # Encontra o aluguel com base no ID
     if @rental.returned_at.nil?  # Se o livro ainda não foi devolvido
       @rental.update(returned_at: Time.current)  # Registra a data de devolução
       @rental.update_status_on_return  # Atualiza o status com base na data de devolução
       book = @rental.book
-      book.update(quantity: book.quantity + 1)  # Aumenta a quantidade de cópias do livro
+      book.update(quanty: book.quanty + 1)  # Aumenta a quantidade de cópias do livro
       redirect_to rentals_path, notice: "Livro devolvido com sucesso!"
     else
       redirect_to rentals_path, alert: "Este livro já foi devolvido."
@@ -102,9 +128,6 @@ class RentalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rental_params
-      params.require(:rental).permit(:book_id, :user_id).merge(
-        rental_date: Date.today,
-        return_estimate_date: Date.today + 25.days
-      )
+      params.require(:rental).permit(:book_id, :user_id, :rental_date, :return_estimate_date)
     end
 end
