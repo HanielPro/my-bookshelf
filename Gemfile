@@ -39,7 +39,7 @@ gem "thruster", require: false
 
 gem "faker"
 
-gem 'cocoon'
+gem "cocoon"
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
@@ -72,3 +72,7 @@ gem "bootstrap", "~> 5.3.3"
 gem "dartsass-sprockets"
 
 gem "sprockets-rails"
+
+gem "devise", "~> 4.9"
+
+gem "cancancan", "~> 3.6"
